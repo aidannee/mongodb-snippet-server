@@ -1,0 +1,25 @@
+### GET all snippets
+GET http://localhost:9000/snippets
+ 
+### GET a single snippet
+GET http://localhost:9000/snippets/DBCC2857
+ 
+### POST a new snippet
+POST http://localhost:9000/snippets
+content-type: application/json
+ 
+{
+    "content": "this is some test content"
+}
+
+
+### DELETE a single snippet
+DELETE http://localhost:9000/snippets/DBCC2857
+
+### PUT a single snippet
+PUT http://localhost:9000/snippets/DBCC2857
+content-type: application/json
+ 
+{
+    "content": "grgrwdgrwdgwefewf"
+}
