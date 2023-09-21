@@ -1,9 +1,12 @@
 import express from "express";
 import { nanoid } from "nanoid";
-
+import cors from "cors";
 const db = [
   {
     id: "DBCC2857",
+    title: "untitled",
+    createdAt: Date.now(),
+    modifiedAt: Date.now(),
     content: `ReferenceError: qwüdpkqwdkpokqwpdk is not defined
     at file:///C:/Users/basic/projects/BEAM/mongodb-project/server/index.js:9:1
     at ModuleJob.run (node:internal/modules/esm/module_job:197:25)
@@ -15,6 +18,9 @@ const db = [
   },
   {
     id: "6F79257C",
+    title: "untitled",
+    createdAt: Date.now(),
+    modifiedAt: Date.now(),
     content: `console.log(3791827398d7qwe98d7wq9d)
     ^^^^^^^^^^
 
@@ -29,6 +35,7 @@ at async link (node:internal/modules/esm/module_job:70:21)
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get("/", function (request, response) {
   console.log("request received at /");
@@ -57,6 +64,10 @@ app.post("/snippets", function (request, response) {
   // 2) save it in the db
   const newDocument = {
     id: nanoid(8),
+    title: request.body.title,
+
+    createdAt: Date.now(),
+    modifiedAt: Date.now(),
     content: request.body.content,
   };
   db.push(newDocument);
@@ -80,6 +91,9 @@ app.put("/snippets/:id", function (request, response) {
   if (foundDocument) {
     const indexOfDoc = db.indexOf(foundDocument);
     db[indexOfDoc].content = request.body.content;
+    db[indexOfDoc].title = request.body.title;
+    db[indexOfDoc].modifiedAt = Date.now();
+
     response.send(db[indexOfDoc]);
   } else {
     response.status(404).send("snippet not found");

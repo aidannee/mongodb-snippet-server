@@ -6,9 +6,11 @@ GET http://localhost:9000/snippets/DBCC2857
  
 ### POST a new snippet
 POST http://localhost:9000/snippets
+
 content-type: application/json
  
 {
+    "title": "test title",
     "content": "this is some test content"
 }
 
@@ -20,6 +22,6 @@ DELETE http://localhost:9000/snippets/DBCC2857
 PUT http://localhost:9000/snippets/DBCC2857
 content-type: application/json
  
-{
+{"title": "test title",
     "content": "grgrwdgrwdgwefewf"
 }
