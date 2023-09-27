@@ -69,6 +69,6 @@ app.put("/snippets/:shortId", async function (request, response) {
   response.send(updatedSnippet);
 });
 
-app.listen(9000, function () {
-  console.log("listening on http://localhost:9000");
+app.listen(process.env.PORT, function () {
+  console.log("listening on http://localhost:9000" + process.env.PORT);
 });
