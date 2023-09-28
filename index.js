@@ -11,6 +11,7 @@ const SnippetSchema = new mongoose.Schema(
     title: String,
     content: String,
     shortId: String,
+    language: String,
   },
   { timestamps: true }
 );
@@ -24,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/snippets", async function (request, response) {
-  const snips = await Snippet.find();
+  const snips = await Snippet.find().sort({ createdAt: -1 }).limit(10);
   response.send(snips);
 });
 
@@ -42,6 +43,7 @@ app.post("/snippets", async function (request, response) {
     shortId: nanoid(8),
     title: request.body.title,
     content: request.body.content,
+    language: request.body.language || "plaintext",
   };
   const createdSnippet = await Snippet.create(newDocument);
   response.send(createdSnippet);
@@ -62,7 +64,11 @@ app.put("/snippets/:shortId", async function (request, response) {
   const { shortId } = request.params;
   const updatedSnippet = await Snippet.findOneAndUpdate(
     { shortId: shortId },
-    { title: request.body.title, content: request.body.content },
+    {
+      title: request.body.title,
+      content: request.body.content,
+      language: request.body.language || "plaintext",
+    },
     { new: true }
   );
 
@@ -70,5 +76,5 @@ app.put("/snippets/:shortId", async function (request, response) {
 });
 
 app.listen(process.env.PORT, function () {
-  console.log("listening on http://localhost:9000" + process.env.PORT);
+  console.log("listening on http://localhost:" + process.env.PORT);
 });
